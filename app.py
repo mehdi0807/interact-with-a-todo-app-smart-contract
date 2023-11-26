@@ -32,20 +32,24 @@ if wallet:
         df = pd.DataFrame(df_list, columns=['Tache', 'Etat'])
         st.write(df)
 
-        tache_ajoutée = st.text_input('Une tache à ajouter')
-        boutton = st.button('Ajouter la tache')
+        tache_ajoutée = st.text_input('Une tâche à ajouter')
+        boutton = st.button('Ajouter la tâche')
         if tache_ajoutée:
             if boutton:
                 ajouter_tache(contract, w3, wallet, private_key, tache_ajoutée)
                 st.experimental_rerun()
 
-        _tache_accomplie = st.selectbox('Choisis une tache qui est accomplie',[tache for tache in taches if progress[taches.index(tache)]==False])
-        if st.button('Tache accomplie'):
+        _tache_accomplie = st.selectbox('Choisis une tâche qui est accomplie',[tache for tache in taches if progress[taches.index(tache)]==False])
+        if st.button('Tâche accomplie'):
             tache_accomplie(contract, w3, wallet, private_key, _tache_accomplie)
             st.experimental_rerun()
 
         pourcentage = pourcentage_accompli(contract)
-        st.progress(pourcentage, text=f'{pourcentage}% des taches sont accomplies')
+        st.progress(pourcentage, text=f'{pourcentage}% des tâches sont accomplies')
+        if pourcentage == 100:
+            st.balloons()
+            st.success("Félicitations ! Tu as accompli toutes tes tâches avec succès. Un vrai pro de la productivité!")
+
         if st.button('reset'):
             reset(contract, w3, wallet, private_key)
             st.experimental_rerun()
