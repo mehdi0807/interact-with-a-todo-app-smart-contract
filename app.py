@@ -12,7 +12,7 @@ w3 = Web3(Web3.HTTPProvider(infura_url))
 
 f = open(os.path.join('src', 'abi.json'))
 contract_abi = json.load(f)
-contract_address = "0x1881ef0Eb82142873f6751B76C5400D08369694f"
+contract_address = "0x660aCEc32977F30aEe4A8637FE489dA43be3302e"
 contract = w3.eth.contract(address=contract_address, abi=contract_abi)
 
 st.sidebar.title('Les informations relatives à votre wallet')
@@ -39,7 +39,7 @@ if wallet:
                 ajouter_tache(contract, w3, wallet, private_key, tache_ajoutée)
                 st.experimental_rerun()
 
-        _tache_accomplie = st.selectbox('Choisis une tache qui est accomplie',taches)
+        _tache_accomplie = st.selectbox('Choisis une tache qui est accomplie',[tache for tache in taches if progress[taches.index(tache)]==False])
         if st.button('Tache accomplie'):
             tache_accomplie(contract, w3, wallet, private_key, _tache_accomplie)
             st.experimental_rerun()
